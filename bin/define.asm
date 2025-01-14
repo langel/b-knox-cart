@@ -1,5 +1,6 @@
 
 addr_booter eqm $fd00
+addr_titlet eqm $fe00
 addr_update eqm $ff00
 
 ppu_ctrl    eqm $2000

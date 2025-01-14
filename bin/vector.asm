@@ -6,6 +6,9 @@
 	org addr_booter
 	include "./booter.asm"
 
+	org addr_titlet
+	include "./titlet.asm"
+
 	org addr_update
 	include "./update.asm"
 

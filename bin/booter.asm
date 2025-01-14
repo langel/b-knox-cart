@@ -61,8 +61,48 @@ booter: subroutine
 	ldx #$00
 	jsr nsf_init
 
+	; palette gen
+	lda #$3f
+	sta ppu_addr
+	lda #$00
+	sta ppu_addr
+	ldx #$08
+	ldy #$05
+.pal_loop
+	tya
+	clc
+	sta ppu_data
+	clc
+	adc #$10
+	sta ppu_data
+	adc #$10
+	sta ppu_data
+	adc #$10
+	sta ppu_data
+	iny
+	dex
+	bne .pal_loop
+
+	; titlet display
+	lda #$20
+	sta ppu_addr
+	lda #$c4
+	sta ppu_addr
+	ldx #$00
+.titlet_loop
+	lda titlet_table,x
+	sta ppu_data
+	inx
+	cpx #$20
+	bne .titlet_loop
+
 	lda #%10000000
 	sta ppu_ctrl
+	lda #%00011000
+	sta ppu_mask
+	lda #$00
+	sta ppu_scroll
+	sta ppu_scroll
 
 
 .spinner
