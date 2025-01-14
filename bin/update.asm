@@ -1,6 +1,6 @@
 
 update: subroutine
 
-	jsr nsf_play ; ? unknown at this time
+	jsr nsf_play 
 
 	rti

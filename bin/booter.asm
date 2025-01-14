@@ -59,7 +59,10 @@ booter: subroutine
 	sta apu_frame
 	lda #$00
 	ldx #$00
-	jsr nsf_init ; ? unknown at this time
+	jsr nsf_init
+
+	lda #%10000000
+	sta ppu_ctrl
 
 
 .spinner

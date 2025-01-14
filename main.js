@@ -9,8 +9,7 @@ console.log(tohex(69));
 fs.readdirSync('./nsf').forEach(file => {
 	if (path.extname(file) == '.nsf') {
  		console.log(cliclr('cyan', '\n=== ' + file));
-		let data = fs.readFileSync('./nsf/' + file);
-		nsf.file_process(data);
+		nsf.file_process('./nsf/' + file);
 	}
 });
 
