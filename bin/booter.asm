@@ -1,4 +1,6 @@
 
+booter: subroutine
+
 	; set modes
 	sei
 	cld
@@ -41,6 +43,23 @@
 	bpl .vsync_wait_2
 
 	cli
+
+	; init nsf
+	lda #$00
+	ldx #$13
+.clear_apu_regs
+	sta $4000,x
+	dex
+	bpl .clear_apu_regs
+	lda #$00
+	sta apu_status
+	lda $0f
+	sta apu_status
+	lda $40
+	sta apu_frame
+	lda #$00
+	ldx #$00
+	jsr nsf_init ; ? unknown at this time
 
 
 .spinner

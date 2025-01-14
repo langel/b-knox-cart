@@ -3,14 +3,14 @@
 
 	include "./define.asm"
 
-	org $fd00
+	org addr_booter
 	include "./booter.asm"
 
-	org $ff00
+	org addr_update
 	include "./update.asm"
 
 	; vectors
 	org $fffa
-	hex ff00 ; nmi
-	hex fd00 ; reset
-	hex ff00 ; brk
+	.word addr_update ; nmi
+	.word addr_booter ; reset
+	.word addr_update ; brk
