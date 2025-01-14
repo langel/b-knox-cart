@@ -69,9 +69,9 @@ booter: subroutine
 	ldx #$08
 	ldy #$05
 .pal_loop
-	tya
-	clc
+	lda #$0c
 	sta ppu_data
+	tya
 	clc
 	adc #$10
 	sta ppu_data
