@@ -25,14 +25,14 @@ booter: subroutine
 	txs
 	inx
 	stx ppu_mask
-	stx dmc_freq
+	stx apu_status
 	stx ppu_ctrl
 	bit ppu_status
-	bit apu_chan_ctrl
+	bit apu_status
 	lda #$40
 	sta apu_frame
 	lda #$0f
-	sta apu_chan_ctrl
+	sta apu_status
 
 	; wait for ppu to warm up
 .vsync_wait_1

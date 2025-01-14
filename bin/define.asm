@@ -1,26 +1,26 @@
 
-ADDR_BOOTER EQM $fd00
-ADDR_UPDATE EQM $ff00
+addr_booter eqm $fd00
+addr_update eqm $ff00
 
-PPU_CTRL    EQM $2000
-PPU_MASK    EQM $2001
-PPU_STATUS  EQM $2002
-OAM_ADDR    EQM $2003
-OAM_DATA    EQM $2004
-PPU_SCROLL  EQM $2005
-PPU_ADDR    EQM $2006
-PPU_DATA    EQM $2007
+ppu_ctrl    eqm $2000
+ppu_mask    eqm $2001
+ppu_status  eqm $2002
+oam_addr    eqm $2003
+oam_data    eqm $2004
+ppu_scroll  eqm $2005
+ppu_addr    eqm $2006
+ppu_data    eqm $2007
 
-PPU_OAM_DMA     EQM $4014
-DMC_FREQ        EQM $4010
-APU_STATUS      EQM $4015
-APU_NOISE_VOL   EQM $400C
-APU_NOISE_FREQ  EQM $400E
-APU_NOISE_TIMER EQM $400F
-APU_DMC_CTRL    EQM $4010
-APU_CHAN_CTRL   EQM $4015
-APU_FRAME       EQM $4017
+apu_pulse1  eqm $4000
+apu_pulse2  eqm $4004
+apu_triang  eqm $4008
+apu_noise   eqm $400c
+apu_dpcm    eqm $4010
+apu_status  eqm $4015
+apu_frame   eqm $4017
 
-JOYPAD1		EQM $4016
-JOYPAD2		EQM $4017
+ppu_oam_dma eqm $4014
+
+joypad1		eqm $4016
+joypad2		eqm $4017
 
