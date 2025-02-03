@@ -1,7 +1,7 @@
 let fs = require('fs');
 let path = require('path');
-let nsf = require('./lib/nsf.js');
 
+let nsf = require('./lib/nsf.js');
 let array = require('./lib/array.js');
 let {tohex, tohex16, cliclr} = require('./lib/util.js');
 let {nrom_from_obj} = require('./lib/nrom.js');
@@ -21,6 +21,9 @@ fs.readdirSync('./nsf').forEach(file => {
 		console.log(cliclr('yellow', 'NTSC playback speed: ' + (Math.round(((1000000 / obj.playspeed) + Number.EPSILON) * 100) / 100) + 'Hz'));
 		let nrom = nrom_from_obj(obj);
 		// find empty chunks of rom
+		// XXX to see the top 3 pages are free
+		//     we should work off the rom before
+		//     those pages are added
 		//console.log('zero segments:');
 		//console.log(array.value_segments(nes_rom, 0, 256));
 		//console.log('255 segments:');
