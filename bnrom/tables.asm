@@ -1,8 +1,8 @@
 track_inits_lo:
-	hex 00 ac 00 b0 40 af 00 80 
+	hex 00 00 40 00 
 track_inits_hi:
-	hex 
+	hex ac b0 af 80 
 track_updates_lo:
-	hex 03 ac 03 b0 43 af 03 80 
+	hex 03 03 43 03 
 track_updates_hi:
-	hex 
+	hex ac b0 af 80 

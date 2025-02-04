@@ -9,7 +9,7 @@ let array = require('./lib/array.js');
 let {alphabin} = require('./lib/string.js');
 let {tohex, tohex16, cliclr} = require('./lib/util.js');
 
-let header = nes.header(34, 8, 1, 0);
+let header = nes.nes2_header(34, 8, 1, 0, 2);
 // xxx missing J and two ?
 let alphabet = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.?!()\'#@[\\]|_"$%&*/:;<=>?+-() ';
 
@@ -48,13 +48,13 @@ for (const obj of nsf_objs) {
 	// build rom vector routines
 	fs.writeFileSync('titlet_table', alphabin(alphabet, obj.titlet, 0x20, 0x80, 0x00));
 	let command = "dasm bnrom/vector.asm -Ibnrom/ -f3 ";
-	command += "-ovector_chunk";
+	command += "-ovector_chunk -T2 -sromsym.txt";
 	//console.log(command);
 	require('child_process').execSync(command,{stdio: 'inherit'});
 	let booter = fs.readFileSync('vector_chunk');
 	bank.set(booter, 0x7d00);
-	fs.unlinkSync('titlet_table');
-	fs.unlinkSync('vector_chunk');
+	//fs.unlinkSync('titlet_table');
+	//fs.unlinkSync('vector_chunk');
 	fs.appendFileSync(outfile, Buffer.from(bank));
 }
 // finish rom file

@@ -27,10 +27,20 @@ joypad2		eqm $4017
 
 
 song_id     eqm $80
-wtf         eqm $81
+
 nmi_ptr_lo  eqm $82
 nmi_ptr_hi  eqm $83
 init_ptr_lo eqm $84
 init_ptr_hi eqm $85
 play_ptr_lo eqm $86
 play_ptr_hi eqm $87
+
+minutes_tens eqm $90
+minutes_ones eqm $91
+seconds_tens eqm $92
+seconds_ones eqm $93
+frames_tens  eqm $94
+frames_ones  eqm $95
+
+wtf         eqm $c0
+wtf_hi      eqm $c1

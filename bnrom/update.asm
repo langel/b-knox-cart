@@ -3,6 +3,12 @@ update: subroutine
 
 	inc wtf
 	bne .not_next
+	inc wtf_hi
+	lda wtf_hi
+	cmp #$40
+	bne .not_next
+	lda #$00
+	sta wtf_hi
 	inc song_id
 	lda song_id
 	and #$03

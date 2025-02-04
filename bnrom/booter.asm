@@ -46,6 +46,7 @@ booter: subroutine
 
 	; init cart
 	lda #$00
+	sta song_id
 	sta $8000
 
 	jsr init_track
@@ -72,7 +73,7 @@ booter: subroutine
 	dex
 	bne .pal_loop
 
-	lda #%10000000
+	lda #%10010000
 	sta ppu_ctrl
 	lda #%00011000
 	sta ppu_mask
@@ -87,6 +88,17 @@ booter: subroutine
 
 
 init_track: subroutine
+	; clear work areas
+	lda #0	
+	tax		
+.clear_work
+	sta $200,x
+	inx		
+	bmi .clear_next
+	sta $00,x
+.clear_next
+	bne .clear_work
+
 	; setup pointers
 	ldx song_id
 	stx $8000
@@ -127,6 +139,9 @@ init_track: subroutine
 	sta apu_frame
 	lda #$00
 	ldx #$00
+
+	sta ppu_scroll
+	sta ppu_scroll
 
 	jmp (init_ptr_lo)
 
