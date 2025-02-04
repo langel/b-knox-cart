@@ -1,7 +1,4 @@
 
-addr_booter eqm $fd00
-addr_titlet eqm $fe00
-addr_update eqm $ff00
 
 ppu_ctrl    eqm $2000
 ppu_mask    eqm $2001
@@ -44,3 +41,9 @@ frames_ones  eqm $95
 
 wtf         eqm $c0
 wtf_hi      eqm $c1
+
+controls    eqm $c8
+controls_d  eqm $c9
+
+temp00      eqm $d0
+temp01      eqm $d1

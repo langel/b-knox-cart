@@ -4,15 +4,17 @@
 	include "./define.asm"
 
 	org $fd00
+addr_booter
 	include "./booter.asm"
 
-	org $fe80
+	org $fe40
 	include "./titlet.asm"
 
-	org $fea0
+	org $fe60
 	include "./tables.asm"
 
-	org $ff00
+	org $fe80
+addr_update
 	include "./update.asm"
 
 	; vectors
