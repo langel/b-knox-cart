@@ -3,15 +3,16 @@
 
 	include "./define.asm"
 
-	org addr_booter
+	org $fd00
 	include "./booter.asm"
 
-	org addr_titlet
+	org $fe80
 	include "./titlet.asm"
 
+	org $fea0
 	include "./tables.asm"
 
-	org addr_update
+	org $ff00
 	include "./update.asm"
 
 	; vectors

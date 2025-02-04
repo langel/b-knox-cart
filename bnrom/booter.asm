@@ -44,13 +44,6 @@ booter: subroutine
 
 	cli
 
-	; init cart
-	lda #$00
-	sta song_id
-	sta $8000
-
-	jsr init_track
-
 	; palette gen
 	lda #$3f
 	sta ppu_addr
@@ -73,13 +66,13 @@ booter: subroutine
 	dex
 	bne .pal_loop
 
-	lda #%10010000
-	sta ppu_ctrl
-	lda #%00011000
-	sta ppu_mask
+	; init cart
 	lda #$00
-	sta ppu_scroll
-	sta ppu_scroll
+	sta song_id
+	sta $8000
+
+	jsr init_track
+
 
 
 .spinner
@@ -99,6 +92,16 @@ init_track: subroutine
 .clear_next
 	bne .clear_work
 
+	; clear timers
+	sta wtf
+	sta wtf_hi
+	sta minutes_tens
+	sta minutes_ones
+	sta seconds_tens
+	sta seconds_ones
+	sta frames_tens
+	sta frames_ones
+
 	; setup pointers
 	ldx song_id
 	stx $8000
@@ -112,6 +115,9 @@ init_track: subroutine
 	sta play_ptr_hi
 	
 	; titlet display
+	lda #$00
+	sta ppu_ctrl
+	sta ppu_mask
 	lda #$20
 	sta ppu_addr
 	lda #$c4
@@ -123,6 +129,10 @@ init_track: subroutine
 	inx
 	cpx #$20
 	bne .titlet_loop
+	lda #%10010000
+	sta ppu_ctrl
+	lda #%00011000
+	sta ppu_mask
 
 	; init nsf
 	lda #$00
