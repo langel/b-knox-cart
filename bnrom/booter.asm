@@ -67,7 +67,7 @@ booter: subroutine
 	bne .pal_loop
 
 	; init cart
-	lda #$01
+	lda #$00
 	sta song_id
 	sta $8000
 

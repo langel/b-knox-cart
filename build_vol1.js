@@ -9,7 +9,7 @@ let array = require('./lib/array.js');
 let {alphabin} = require('./lib/string.js');
 let {tohex, tohex16, cliclr} = require('./lib/util.js');
 
-let header = nes.nes2_header(34, 8, 1, 0, 2);
+let header = nes.nes2_header(34, 32, 1, 0, 2);
 // xxx missing J and two ?
 let alphabet = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.?!()\'#@[\\]|_"$%&*/:;<=>?+-() ';
 
