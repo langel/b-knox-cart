@@ -18,6 +18,18 @@ let track_list = [
 	'breakface fliplol',
 	'wafer blossum',
 	'ogoru fire',
+	'256 orange hues',
+	'bediddle stump thrusters',
+	'wizzy does it',
+	'biggum dimdum',
+	'bomnads',
+	'homewrecker jim',
+	'naubrawk',
+	'you don\'t know',
+	'bipdem deblip',
+	'boddinbodden',
+	'grizzle login',
+	'boombutt',
 ];
 
 let nsf_objs = [];
@@ -48,7 +60,7 @@ for (const obj of nsf_objs) {
 	// build rom vector routines
 	fs.writeFileSync('titlet_table', alphabin(alphabet, obj.titlet, 0x20, 0x80, 0x00));
 	let command = "dasm bnrom/vector.asm -Ibnrom/ -f3 ";
-	command += "-ovector_chunk -T1 -sromsym.txt";
+	command += "-ovector_chunk -T2 -sromsym.txt";
 	//console.log(command);
 	require('child_process').execSync(command,{stdio: 'inherit'});
 	let booter = fs.readFileSync('vector_chunk');

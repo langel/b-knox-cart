@@ -53,7 +53,7 @@ time_display
 	beq .not_controlled_next
 	inc song_id
 	lda song_id
-	and #$03
+	and #$0f
 	sta song_id
 	lda #$00
 	sta controls_d

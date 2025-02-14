@@ -13,7 +13,7 @@ addr_booter
 	org $fe60
 	include "./tables.asm"
 
-	org $fe80
+	org $fea0
 addr_update
 	include "./update.asm"
 
