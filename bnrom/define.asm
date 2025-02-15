@@ -23,27 +23,27 @@ joypad1		eqm $4016
 joypad2		eqm $4017
 
 
-song_id     eqm $80
+song_id     eqm $180
 
-nmi_ptr_lo  eqm $82
-nmi_ptr_hi  eqm $83
-init_ptr_lo eqm $84
-init_ptr_hi eqm $85
-play_ptr_lo eqm $86
-play_ptr_hi eqm $87
+nmi_ptr_lo  eqm $182
+nmi_ptr_hi  eqm $183
+init_ptr_lo eqm $184
+init_ptr_hi eqm $185
+play_ptr_lo eqm $186
+play_ptr_hi eqm $187
 
-minutes_tens eqm $90
-minutes_ones eqm $91
-seconds_tens eqm $92
-seconds_ones eqm $93
-frames_tens  eqm $94
-frames_ones  eqm $95
+minutes_tens eqm $190
+minutes_ones eqm $191
+seconds_tens eqm $192
+seconds_ones eqm $193
+frames_tens  eqm $194
+frames_ones  eqm $195
 
-wtf         eqm $c0
-wtf_hi      eqm $c1
+wtf         eqm $1a0
+wtf_hi      eqm $1a1
 
-controls    eqm $c8
-controls_d  eqm $c9
+controls    eqm $1a8
+controls_d  eqm $1a9
 
-temp00      eqm $d0
-temp01      eqm $d1
+temp00      eqm $1aa
+temp01      eqm $1ab

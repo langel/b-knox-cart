@@ -85,11 +85,11 @@ init_track: subroutine
 	lda #0	
 	tax		
 .clear_work
-	sta $200,x
-	inx		
-	bmi .clear_next
 	sta $00,x
-.clear_next
+	sta $200,x
+	sta $400,x
+	sta $500,x
+	inx		
 	bne .clear_work
 
 	; clear timers

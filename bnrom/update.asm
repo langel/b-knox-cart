@@ -44,7 +44,7 @@ time_display
 	sta wtf_hi
 	inc song_id
 	lda song_id
-	and #$03
+	and #$0f
 	sta song_id
 	jsr init_track
 .not_forced_next
