@@ -5,35 +5,6 @@ booter: subroutine
 	sei
 	cld
 
-	; clear ram
-	lda #0	
-	tax		
-.clear_ram_loop
-	sta $000,x	
-	sta $100,x	
-	sta $200,x	
-	sta $300,x	
-	sta $400,x	
-	sta $500,x	
-	sta $600,x	
-	sta $700,x	
-	inx		
-	bne .clear_ram_loop	
-
-	; zero out system
-	ldx #$ff
-	txs
-	inx
-	stx ppu_mask
-	stx apu_status
-	stx ppu_ctrl
-	bit ppu_status
-	bit apu_status
-	lda #$40
-	sta apu_frame
-	lda #$0f
-	sta apu_status
-
 	; wait for ppu to warm up
 .vsync_wait_1
 	bit ppu_status
@@ -41,8 +12,6 @@ booter: subroutine
 .vsync_wait_2
 	bit ppu_status
 	bpl .vsync_wait_2
-
-	cli
 
 	; palette gen
 	lda #$3f
@@ -71,36 +40,47 @@ booter: subroutine
 	sta song_id
 	sta $8000
 
-	jsr init_track
-
-
-
-.spinner
-	jmp .spinner
-
 
 
 init_track: subroutine
-	; clear work areas
+
+	sei
+	; wait for vblank
+.vsync_wait
+	bit ppu_status
+	bpl .vsync_wait
+
+	; disable rendering
+	lda #$00
+	sta ppu_mask
+
+	; clear ram
 	lda #0	
 	tax		
-.clear_work
-	sta $00,x
-	sta $200,x
-	sta $400,x
-	sta $500,x
+.clear_ram_loop
+	sta $000,x	
+	sta $100,x	
+	sta $200,x	
+	sta $300,x	
+	sta $400,x	
+	sta $500,x	
+	sta $600,x	
 	inx		
-	bne .clear_work
+	bne .clear_ram_loop	
 
-	; clear timers
-	sta wtf
-	sta wtf_hi
-	sta minutes_tens
-	sta minutes_ones
-	sta seconds_tens
-	sta seconds_ones
-	sta frames_tens
-	sta frames_ones
+	; zero out system
+	ldx #$ff
+	txs
+	inx
+	stx ppu_mask
+	stx apu_status
+	stx ppu_ctrl
+	bit ppu_status
+	bit apu_status
+	lda #$40
+	sta apu_frame
+	lda #$0f
+	sta apu_status
 
 	; setup pointers
 	ldx song_id
@@ -152,6 +132,14 @@ init_track: subroutine
 
 	sta ppu_scroll
 	sta ppu_scroll
+	
+	cli
 
+	jsr .nsf_init
+
+.spinner
+	jmp .spinner
+
+.nsf_init
 	jmp (init_ptr_lo)
 
