@@ -13,7 +13,7 @@ time_display
 	lda minutes_ones
 	adc #$80
 	sta ppu_data
-	lda #$d1
+	lda #$d2 ; ':'
 	sta ppu_data
 	lda seconds_tens
 	adc #$80
@@ -21,7 +21,7 @@ time_display
 	lda seconds_ones
 	adc #$80
 	sta ppu_data
-	lda #$be
+	lda #$bf ; '.'
 	sta ppu_data
 	lda frames_tens
 	adc #$80
