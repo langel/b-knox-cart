@@ -7,10 +7,10 @@
 addr_booter
 	include "./booter.asm"
 
-	org $fe40
+	org $fe20
 	include "./titlet.asm"
 
-	org $fe60
+	org $fe40
 	include "./tables.asm"
 
 	org $fea0

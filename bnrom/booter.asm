@@ -93,6 +93,10 @@ init_track: subroutine
 	sta play_ptr_lo
 	lda track_updates_hi,x
 	sta play_ptr_hi
+	lda track_lengths_lo,x
+	sta length_lo
+	lda track_lengths_hi,x
+	sta length_hi
 	
 	; titlet display
 	lda #$00

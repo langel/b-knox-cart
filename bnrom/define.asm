@@ -39,6 +39,9 @@ seconds_ones  eqm $93
 frames_tens   eqm $94
 frames_ones   eqm $95
 
+length_lo     eqm $96
+length_hi     eqm $97
+
 wtf           eqm $a0
 wtf_hi        eqm $a1
 

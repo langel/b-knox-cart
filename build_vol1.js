@@ -14,40 +14,43 @@ let header = nes.nes2_header(34, 32, 1, 0, 2);
 let alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.?!()\'#@[\\]|_"$%&*/:;<=>?+-() ';
 
 let track_list = [
-	'beardboy castle',
-	'breakface fliplol',
-	'wafer blossum',
-	'ogoru fire',
-	'256 orange hues',
-	'bediddle stump thrusters',
-	'wizzy does it',
-	'biggum dimdum',
-	'bomnads',
-	'homewrecker jim',
-	'naubrawk',
-	'you don\'t know',
-	'bipdem deblip',
-	'boddinbodden',
-	'grizzle login',
-	'boombutt',
+	{ title: 'breakface fliplol', length: 0x1700 },
+	{ title: 'wafer blossum', length: 0x23f0 },
+	{ title: 'bediddle stump thrusters', length: 0x3060 },
+	{ title: 'bipdem deblip', length: 0x0e10 },
+	{ title: 'boddinbodden', length: 0x1130 },
+	{ title: 'bomnads', length: 0x0f2a },
+	{ title: '256 orange hues', length: 0x1aa0 },
+	{ title: 'naubrawk', length: 0x0ba0 },
+	{ title: 'grizzle login', length: 0x0c90 },
+	{ title: 'homewrecker jim', length: 0x0aa8 },
+	{ title: 'you don\'t know', length: 0x0bf0 },
+	{ title: 'wizzy does it', length: 0x2130 },
+	{ title: 'ogoru fire', length: 0x2a20 },
+	{ title: 'biggum dimdum', length: 0x1018 },
+	{ title: 'boombutt', length: 0x1198 },
+	{ title: 'beardboy castle', length: 0x313a },
 ];
 
 let nsf_objs = [];
 let track_inits = [];
 let track_updates = [];
+let track_lengths = [];
 // process NSFs
 for (const track of track_list) {
-	let input = 'nsf/' + track + '.nsf';
+	let input = 'nsf/' + track.title + '.nsf';
 	console.log(cliclr('cyan', 'Loading ' + input + ' . . .'));
 	let obj = nsf.file_process(input);
 	track_inits.push(obj.address_init);
 	track_updates.push(obj.address_play);
+	track_lengths.push(track.length);
 	nsf_objs.push(obj);
 }
 // build asm LUTs
 let tables = '';
 tables += asm.pointer_table('track_inits', track_inits);
 tables += asm.pointer_table('track_updates', track_updates);
+tables += asm.pointer_table('track_lengths', track_lengths);
 fs.writeFileSync('bnrom/tables.asm', tables);
 // start rom file
 let outfile = 'vol1.nes';

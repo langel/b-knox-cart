@@ -1,4 +1,6 @@
 
+; NMI
+
 update: subroutine
 
 time_display
@@ -29,25 +31,55 @@ time_display
 	lda frames_ones
 	adc #$80
 	sta ppu_data
-
+wtf_display
 	lda #$00
-	sta ppu_scroll
-	sta ppu_scroll
-
-	inc wtf
-	bne .not_forced_next
-	inc wtf_hi
+	sta ppu_data
+	sta ppu_data
 	lda wtf_hi
-	cmp #$40
-	bne .not_forced_next
+	lsr
+	lsr
+	lsr
+	lsr
+	clc
+	adc #$80
+	sta ppu_data
+	lda wtf_hi
+	and #$0f
+	adc #$80
+	sta ppu_data
+	lda wtf
+	lsr
+	lsr
+	lsr
+	lsr
+	clc
+	adc #$80
+	sta ppu_data
+	lda wtf
+	and #$0f
+	adc #$80
+	sta ppu_data
+
 	lda #$00
-	sta wtf_hi
+	sta ppu_scroll
+	sta ppu_scroll
+
+	lda wtf
+	cmp length_lo
+	bne .not_forced_next
+	lda wtf_hi
+	cmp length_hi
+	bne .not_forced_next
 	inc song_id
 	lda song_id
 	and #$0f
 	sta song_id
 	jsr init_track
 .not_forced_next
+	inc wtf
+	bne .not_wtf_hi
+	inc wtf_hi
+.not_wtf_hi
 
 	lda controls_d
 	beq .not_controlled_next
