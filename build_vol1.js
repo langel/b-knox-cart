@@ -36,6 +36,7 @@ let nsf_objs = [];
 let track_inits = [];
 let track_updates = [];
 let track_lengths = [];
+let length_total = 0;
 // process NSFs
 for (const track of track_list) {
 	let input = 'nsf/' + track.title + '.nsf';
@@ -45,6 +46,7 @@ for (const track of track_list) {
 	track_updates.push(obj.address_play);
 	track_lengths.push(track.length);
 	nsf_objs.push(obj);
+	length_total += track.length;
 }
 // build asm LUTs
 let tables = '';
@@ -75,6 +77,12 @@ for (const obj of nsf_objs) {
 // finish rom file
 let chr = fs.readFileSync('bnrom/graphix.chr');
 fs.appendFileSync(outfile, Buffer.from(chr));
+
+// display total length of playback
+let length_seconds = Math.round(length_total / 60);
+let minutes = Math.floor(length_seconds / 60);
+let seconds = length_seconds - minutes * 60;
+console.log('total length: ' + minutes + ':' + seconds);
 
 /*
 	let segments_00 = array.blank_pages(nrom.prg, 0x00);
