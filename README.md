@@ -1,4 +1,12 @@
 # b-knox-cart
 
-califormidazod liner notes:
-A mineral deposit only found between the Earth's mantle and outer core. Noted for a constant 7Hz pulsation caused by tectonic drift, it also radiates dubios harmonics commonly found in gaussian brown noise ballistic templates. Larger clusters have been known to gather below groupings of mammalian pugilists. Smaller city states such as Liechtenstein, Malta, and the Vatican utilize califormidazod in the manufacturing of artificially priceless enchanted artifacts in ritual succession within phase of their ancestral mother planet. It can also relieve aches and pains or make them worse depending on the celestial parity matrix coagulated against the galactic meridian tilt polarity.
+## TO_DO's
+
+Title Screen waiting for user input to start playback and a place for playback to return to when done instead of looping all 16 tracks indefinitely. Will have to fit on to whatever bank along with its custom visual code.
+
+Breakout default init and update behavior code.
+
+Abstract individual bank runtimes:
+- booter shouldn't include init_track
+- init_track shouldn't include titlet plotting
+- nmi should call custom render/update first

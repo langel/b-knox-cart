@@ -1,0 +1,9 @@
+
+
+0x00 :: breakface fliplol        :: 0x1700
+
+0x01 :: wafer blossom            :: 0x23f8
+
+0x02 :: bediddle stump thrusters :: 0x3060
+
+0x03 :: bipdem deblip            :: 0x0e10
