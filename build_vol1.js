@@ -13,40 +13,23 @@ let header = nes.nes2_header(34, 32, 1, 0, 2);
 // xxx missing J and two ?
 let alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.?!()\'#@[\\]|_"$%&*/:;<=>?+-() ';
 
-let track_list = [
-	{ title: 'breakface fliplol', length: 0x1700,
-		voids: [[0, 0x1fff]] },
-	{ title: 'wafer blossum', length: 0x23f8,
-		voids: [[0, 0x1aff], [0x5100, 0x7cff]] },
-	{ title: 'bediddle stump thrusters', length: 0x3060,
-		voids: [[0, 0x05ff], [0x4e00, 0x7cff]] },
-	{ title: 'bipdem deblip', length: 0x0e10,
-		voids: [[0, 0x29ff], [0x6200, 0x7cff]] },
-	{ title: 'boddinbodden', length: 0x1130,
-		voids: [[0x1cc0, 0x3fff], [0x7a00, 0x7cff]] },
-	{ title: 'bomnads', length: 0x0f32,
-		voids: [[0x1b00, 0x3fff], [0x7700, 0x7cff]] },
-	{ title: '256 orange hues', length: 0x1aa0,
-		voids: [[0, 0x1eff], [0x4400, 0x7cff]] },
-	{ title: 'naubrawk', length: 0x0ba0, 
-		voids: [[0x1600, 0x3fff]] },
-	{ title: 'grizzle login', length: 0x0c90, 
-		voids: [[0, 0x2aff], [0x7900, 0x7cff]] },
-	{ title: 'homewrecker jim', length: 0x0ab0,
-		voids: [[0x1a00, 0x3fff], [0x7500, 0x7cff]] },
-	{ title: 'you don\'t know', length: 0x0bf0,
-		voids: [[0x1900, 0x3fff], [0x5700, 0x5fff], [0x6000, 0x7cff]] },
-	{ title: 'wizzy does it', length: 0x2150,
-		voids: [[0, 0x07ff], [0x6800, 0x7cff]] },
-	{ title: 'ogoru fire', length: 0x2a20,
-		voids: [[0x4c00, 0x7cff]] },
-	{ title: 'biggum dimdum', length: 0x1030,
-		voids: [[0, 0x2aff], [0x7100, 0x7cff]] },
-	{ title: 'boombutt', length: 0x1198,
-		voids: [[0x1700, 0x3fff], [0x7500, 0x7cff]] },
-	{ title: 'beardboy castle', length: 0x313a,
-		voids: [[0x4a00, 0x7cff]] },
-];
+const project_name = process.argv[2];
+let track_list
+try {
+	track_list = fs.readFileSync(project_name + ".json", "utf8");
+	console.log(track_list);
+	track_list = track_list.replace(/0x([0-9a-fA-F]+)/g, (_, hex) => `${parseInt(hex, 16)}`);
+	track_list = JSON.parse(track_list);
+	console.log(track_list);
+} catch (e) {
+	if (project_name == undefined) {
+		console.log("usage :: node build.js {project_name}");
+	}
+	else {
+		console.log(project_name + ".json not found or borked json");
+	}
+	process.exit(1);
+}
 
 let nsf_objs = [];
 let track_inits = [];
@@ -72,7 +55,7 @@ tables += asm.pointer_table('track_updates', track_updates);
 tables += asm.pointer_table('track_lengths', track_lengths);
 fs.writeFileSync('bnrom/tables.asm', tables);
 // start rom file
-let outfile = 'vol1.nes';
+let outfile = project_name + '.nes';
 fs.writeFileSync(outfile, Buffer.from(header));
 // build banks
 for (const [i, obj] of nsf_objs.entries()) {

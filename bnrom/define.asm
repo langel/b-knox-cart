@@ -1,5 +1,4 @@
 
-
 ppu_ctrl    eqm $2000
 ppu_mask    eqm $2001
 ppu_status  eqm $2002
@@ -23,14 +22,15 @@ joypad1		eqm $4016
 joypad2		eqm $4017
 
 
-song_id       eqm $7ff
-
 nmi_ptr_lo    eqm $82
 nmi_ptr_hi    eqm $83
 init_ptr_lo   eqm $84
 init_ptr_hi   eqm $85
 play_ptr_lo   eqm $86
 play_ptr_hi   eqm $87
+
+wtf           eqm $9a
+wtf_hi        eqm $9b
 
 minutes_tens  eqm $90
 minutes_ones  eqm $91
@@ -42,11 +42,16 @@ frames_ones   eqm $95
 length_lo     eqm $96
 length_hi     eqm $97
 
-wtf           eqm $a0
-wtf_hi        eqm $a1
+temp00        eqm $98
+temp01        eqm $99
+temp02        eqm $9a
+temp03        eqm $9b
+temp04        eqm $9c
+temp05        eqm $9d
+temp06        eqm $9e
+temp07        eqm $9f
 
 controls      eqm $7f8
 controls_d    eqm $7f9
 
-temp00        eqm $aa
-temp01        eqm $ab
+song_id       eqm $7ff
