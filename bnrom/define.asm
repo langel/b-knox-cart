@@ -21,13 +21,14 @@ ppu_oam_dma eqm $4014
 joypad1		eqm $4016
 joypad2		eqm $4017
 
-
-nmi_ptr_lo    eqm $82
-nmi_ptr_hi    eqm $83
-init_ptr_lo   eqm $84
-init_ptr_hi   eqm $85
-play_ptr_lo   eqm $86
-play_ptr_hi   eqm $87
+init_bank_lo  eqm $80
+init_bank_hi  eqm $81
+play_bank_lo  eqm $82
+play_bank_hi  eqm $83
+init_nsf_lo   eqm $84
+init_nsf_hi   eqm $85
+play_nsf_lo   eqm $86
+play_nsf_hi   eqm $87
 
 wtf           eqm $9a
 wtf_hi        eqm $9b
@@ -55,3 +56,7 @@ controls      eqm $7f8
 controls_d    eqm $7f9
 
 song_id       eqm $7ff
+
+
+nsf_init_addr eqm $fd50
+titlet_table  eqm $fe00

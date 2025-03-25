@@ -7,13 +7,16 @@
 addr_booter
 	include "./booter.asm"
 
-	org $fe20
-	include "./titlet.asm"
+	org nsf_init_addr
+	include "./init_t.asm"
 
-	org $fe40
+	org titlet_table
+	incbin "./titlet_table"	
+
+	org $fe60
 	include "./tables.asm"
 
-	org $fea0
+	org $ff00
 addr_update
 	include "./update.asm"
 

@@ -29,17 +29,23 @@ try {
 	process.exit(1);
 }
 
-let nsf_objs = [];
+// asm LUT arrays
+let bank_inits = [];
+let bank_updates = [];
 let track_inits = [];
 let track_updates = [];
 let track_lengths = [];
-let length_total = 0;
+
 // process NSFs
-for (const track of track_list) {
+let nsf_objs = [];
+let length_total = 0;
+for (const [i, track] of track_list.entries()) {
 	let input = 'nsf/' + track.title + '.nsf';
 	console.log(cliclr('cyan', 'Loading ' + input + ' . . .'));
 	let obj = nsf.file_process(input);
 	obj.track_data = track;
+	bank_inits.push(track_list[i].voids[0][0] + 0x8000);
+	bank_updates.push(track_list[i].voids[0][0] + 0x8080);
 	track_inits.push(obj.address_init);
 	track_updates.push(obj.address_play);
 	track_lengths.push(track.length);
@@ -49,29 +55,50 @@ for (const track of track_list) {
 
 // build asm LUTs
 let tables = '';
+tables += asm.pointer_table('bank_inits', bank_inits);
+tables += asm.pointer_table('bank_updates', bank_updates);
 tables += asm.pointer_table('track_inits', track_inits);
 tables += asm.pointer_table('track_updates', track_updates);
 tables += asm.pointer_table('track_lengths', track_lengths);
 fs.writeFileSync('bnrom/tables.asm', tables);
+
 // start rom file
 let outfile = project_name + '.nes';
 fs.writeFileSync(outfile, Buffer.from(header));
+
+
 // build banks
 for (const [i, obj] of nsf_objs.entries()) {
 	let bank = new Uint8Array(32 * 1024);
+	let track = track_list[i];
+
 	// copy nsf data
 	bank.set(obj.data, obj.address_load - 0x8000);
+
 	// build rom vector routines
 	fs.writeFileSync('titlet_table', alphabin(alphabet, obj.titlet, 0x20, 0x80, 0x00));
 	let command = "dasm bnrom/vector.asm -Ibnrom/ -f3 ";
 	command += "-ovector_chunk -T1 -sromsym.txt";
 	//console.log(command);
-	require('child_process').execSync(command,{stdio: 'inherit'});
+	require('child_process').execSync(command, {stdio: 'inherit'});
 	let booter = fs.readFileSync('vector_chunk');
 	bank.set(booter, 0x7d00);
 	//fs.unlinkSync('titlet_table');
 	//fs.unlinkSync('vector_chunk');
+
+	// custom bank vectors
+	command = "dasm bnrom/bankag.asm -Ibnrom/ -f3 ";
+	command += "-Mbankag_addr=" + (track.voids[0][0] + 0x8000);
+	command += " -obank_chunk";
+	console.log(command);
+	require('child_process').execSync(command, {stdio: 'inherit'});
+	let bankag = fs.readFileSync('bank_chunk');
+	let addr = track.voids[0][0];
+	bank.set(bankag, addr);
+	//fs.unlinkSync('bank_chunk');
+	
 	fs.appendFileSync(outfile, Buffer.from(bank));
+
 	// display void data
 	console.log(i + ') ' +obj.track_data.title);
 	let void_space = 0;
@@ -85,6 +112,7 @@ for (const [i, obj] of nsf_objs.entries()) {
 // finish rom file
 let chr = fs.readFileSync('bnrom/graphix.chr');
 fs.appendFileSync(outfile, Buffer.from(chr));
+
 
 // display total length of playback
 let length_seconds = Math.round(length_total / 60);
