@@ -4,7 +4,15 @@
 		"length": 0x1700,
 		"voids": [
 			[0x0000, 0x1fff]
-		]
+		],
+		"init": {
+			"file": "00_breakface_init.asm",
+			"address": 0x0000
+		},
+		"update": {
+			"file": "00_breakface_update.asm",
+			"address": 0x0200
+		}
 	},
 	{ 
 		"title": "wafer blossum",

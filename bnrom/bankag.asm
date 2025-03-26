@@ -35,6 +35,21 @@ bank_init: subroutine
 	iny
 	dex
 	bne .pal_loop
+
+	; clear screen
+	lda #$20
+	sta ppu_addr
+	lda #$00
+	sta ppu_addr
+	tax
+	tay
+.clear_screen
+	sta ppu_data
+	inx
+	bne .clear_screen
+	iny
+	cpy #$04
+	bne .clear_screen
 	
 	; titlet display
 	lda #$20
