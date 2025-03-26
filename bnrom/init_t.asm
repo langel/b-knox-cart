@@ -91,6 +91,8 @@ init_track: subroutine
 
 	jsr nsf_init
 
+	lda #$00
+	sta nmi_lock
 
 .spinner
 	jmp .spinner

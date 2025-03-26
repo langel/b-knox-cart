@@ -3,10 +3,8 @@
 
 update: subroutine
 
-	lda #$00
-	sta ppu_scroll
-	sta ppu_scroll
-
+	jsr update_bank
+	
 	lda wtf
 	cmp length_lo
 	bne .not_forced_next
@@ -71,14 +69,12 @@ update: subroutine
 
 	jsr controller_read
 
-	jsr update_bank
-	
 	lda #%00011001
 	sta ppu_mask
 
 	jsr update_track
 
-	lda #%00011000
+	lda #%00011110
 	sta ppu_mask
 
 

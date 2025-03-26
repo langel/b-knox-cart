@@ -44,13 +44,19 @@ for (const [i, track] of track_list.entries()) {
 	console.log(cliclr('cyan', 'Loading ' + input + ' . . .'));
 	let obj = nsf.file_process(input);
 	obj.track_data = track;
-	bank_inits.push(track_list[i].voids[0][0] + 0x8000);
-	bank_updates.push(track_list[i].voids[0][0] + 0x8080);
 	track_inits.push(obj.address_init);
 	track_updates.push(obj.address_play);
 	track_lengths.push(track.length);
 	nsf_objs.push(obj);
 	length_total += track.length;
+}
+
+// process custom vectors
+for (const [i, track] of track_list.entries()) {
+	if ("init" in track) bank_inits.push(track_list[i].init.addr + 0x8000);
+	else bank_inits.push(track_list[i].voids[0][0] + 0x8000);
+	if ("update" in track) bank_updates.push(track_list[i].update.addr + 0x8000);
+	else bank_updates.push(track_list[i].voids[0][0] + 0x8080);
 }
 
 // build asm LUTs
@@ -87,14 +93,34 @@ for (const [i, obj] of nsf_objs.entries()) {
 	//fs.unlinkSync('vector_chunk');
 
 	// custom bank vectors
-	command = "dasm bnrom/bankag.asm -Ibnrom/ -f3 ";
-	command += "-Mbankag_addr=" + (track.voids[0][0] + 0x8000);
-	command += " -obank_chunk";
-	console.log(command);
-	require('child_process').execSync(command, {stdio: 'inherit'});
-	let bankag = fs.readFileSync('bank_chunk');
-	let addr = track.voids[0][0];
-	bank.set(bankag, addr);
+	if ("init" in track) {
+		// init
+		command = "dasm " + project_name + "/" + track.init.file + " -Ibnrom/ "
+		command += "-Maddress=" + (track.init.addr + 0x8000);
+		command += " -f3 -obank_chunk";
+		console.log(command);
+		require('child_process').execSync(command, {stdio: 'inherit'});
+		let bankinit = fs.readFileSync('bank_chunk');
+		bank.set(bankinit, track.init.addr);
+		// update
+		command = "dasm " + project_name + "/" + track.update.file + " -Ibnrom/ "
+		command += "-Maddress=" + (track.update.addr + 0x8000);
+		command += " -f3 -obank_chunk";
+		console.log(command);
+		require('child_process').execSync(command, {stdio: 'inherit'});
+		let bankupdate = fs.readFileSync('bank_chunk');
+		bank.set(bankupdate, track.update.addr);
+	}
+	else {
+		command = "dasm bnrom/bankag.asm -Ibnrom/ -f3 ";
+		command += "-Mbankag_addr=" + (track.voids[0][0] + 0x8000);
+		command += " -obank_chunk";
+		console.log(command);
+		require('child_process').execSync(command, {stdio: 'inherit'});
+		let bankag = fs.readFileSync('bank_chunk');
+		let addr = track.voids[0][0];
+		bank.set(bankag, addr);
+	}
 	//fs.unlinkSync('bank_chunk');
 	
 	fs.appendFileSync(outfile, Buffer.from(bank));

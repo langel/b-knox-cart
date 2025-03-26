@@ -30,8 +30,11 @@ init_nsf_hi   eqm $85
 play_nsf_lo   eqm $86
 play_nsf_hi   eqm $87
 
-wtf           eqm $9a
-wtf_hi        eqm $9b
+wtf           eqm $8a
+wtf_hi        eqm $8b
+
+rng0          eqm $8e
+rng1          eqm $8f
 
 minutes_tens  eqm $90
 minutes_ones  eqm $91
@@ -52,6 +55,7 @@ temp05        eqm $9d
 temp06        eqm $9e
 temp07        eqm $9f
 
+nmi_lock      eqm $7f0
 controls      eqm $7f8
 controls_d    eqm $7f9
 

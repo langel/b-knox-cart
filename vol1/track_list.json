@@ -7,11 +7,11 @@
 		],
 		"init": {
 			"file": "00_breakface_init.asm",
-			"address": 0x0000
+			"addr": 0x0000
 		},
 		"update": {
 			"file": "00_breakface_update.asm",
-			"address": 0x0200
+			"addr": 0x0200
 		}
 	},
 	{ 

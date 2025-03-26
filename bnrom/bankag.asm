@@ -63,6 +63,7 @@ bank_init: subroutine
 	inx
 	cpx #$20
 	bne .titlet_loop
+
 	lda #%10010000
 	sta ppu_ctrl
 	lda #%00011000

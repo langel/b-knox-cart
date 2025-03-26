@@ -3,9 +3,9 @@ bank_inits_lo:
 bank_inits_hi:
 	hex 80 80 80 80 9c 9b 80 96 80 9a 99 80 cc 80 97 ca 
 bank_updates_lo:
-	hex 80 80 80 80 40 80 80 80 80 80 80 80 80 80 80 80 
+	hex 00 80 80 80 40 80 80 80 80 80 80 80 80 80 80 80 
 bank_updates_hi:
-	hex 80 80 80 80 9d 9b 80 96 80 9a 99 80 cc 80 97 ca 
+	hex 82 80 80 80 9d 9b 80 96 80 9a 99 80 cc 80 97 ca 
 track_inits_lo:
 	hex 00 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 track_inits_hi:
