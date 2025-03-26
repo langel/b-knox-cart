@@ -11,6 +11,20 @@ init_track: subroutine
 	; disable rendering
 	lda #$00
 	sta ppu_mask
+	
+	; clear ram
+	lda #0	
+	tax		
+.clear_ram_loop
+	sta $000,x	
+	sta $100,x	
+	sta $200,x	
+	sta $300,x	
+	sta $400,x	
+	sta $500,x	
+	sta $600,x	
+	inx		
+	bne .clear_ram_loop	
 
 	; zero out system
 	ldx #$ff
@@ -25,20 +39,8 @@ init_track: subroutine
 	sta apu_frame
 	lda #$0f
 	sta apu_status
-
-	; clear ram
-	lda #0	
-	tax		
-.clear_ram_loop
-	sta $000,x	
-	sta $100,x	
-	sta $200,x	
-	sta $300,x	
-	sta $400,x	
-	sta $500,x	
-	sta $600,x	
-	inx		
-	bne .clear_ram_loop	
+	stx ppu_scroll
+	stx ppu_scroll
 
 	; setup pointers
 	ldx song_id
@@ -84,7 +86,7 @@ init_track: subroutine
 
 	sta ppu_scroll
 	sta ppu_scroll
-	
+
 	cli
 
 	jsr nsf_init

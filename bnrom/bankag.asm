@@ -13,10 +13,30 @@
 	org bankag_addr
 
 bank_init: subroutine
-	; titlet display
+
+	; palette gen
+	lda #$3f
+	sta ppu_addr
 	lda #$00
-	sta ppu_ctrl
-	sta ppu_mask
+	sta ppu_addr
+	ldx #$08
+	ldy #$05
+.pal_loop
+	lda #$0c
+	sta ppu_data
+	tya
+	clc
+	adc #$10
+	sta ppu_data
+	adc #$10
+	sta ppu_data
+	adc #$10
+	sta ppu_data
+	iny
+	dex
+	bne .pal_loop
+	
+	; titlet display
 	lda #$20
 	sta ppu_addr
 	lda #$c4
@@ -103,39 +123,6 @@ bank_update: subroutine
 	sta ppu_scroll
 	sta ppu_scroll
 
-	; timer
-	inc frames_ones
-	lda frames_ones
-	cmp #$0a
-	bne .timer_done
-	lda #$00
-	sta frames_ones
-	inc frames_tens
-	lda frames_tens
-	cmp #$06
-	bne .timer_done
-	lda #$00
-	sta frames_tens
-	inc seconds_ones
-	lda seconds_ones
-	cmp #$0a
-	bne .timer_done
-	lda #$00
-	sta seconds_ones
-	inc seconds_tens
-	lda seconds_tens
-	cmp #$06
-	bne .timer_done
-	lda #$00
-	sta seconds_tens
-	inc minutes_ones
-	lda minutes_ones
-	cmp #$0a
-	bne .timer_done
-	lda #$00
-	sta minutes_ones
-	inc minutes_tens
-.timer_done
 
 	ldx #$00
 	ldy #$05
@@ -148,17 +135,5 @@ bank_update: subroutine
 	dey
 	bpl .wait_loop
 
-	lda #%00011001
-	sta ppu_mask
-
-	jsr update_track
-
-	lda #%00011000
-	sta ppu_mask
-
 	rts
-
-
-update_track: subroutine
-	jmp (play_nsf_lo)
 

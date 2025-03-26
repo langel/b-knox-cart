@@ -4,6 +4,11 @@ booter: subroutine
 	; set modes
 	sei
 	cld
+	
+	; disable rendering
+	lda #$00
+	sta ppu_ctrl
+	sta ppu_mask
 
 	; wait for ppu to warm up
 .vsync_wait_1
@@ -13,28 +18,6 @@ booter: subroutine
 	bit ppu_status
 	bpl .vsync_wait_2
 
-	; palette gen
-	lda #$3f
-	sta ppu_addr
-	lda #$00
-	sta ppu_addr
-	ldx #$08
-	ldy #$05
-.pal_loop
-	lda #$0c
-	sta ppu_data
-	tya
-	clc
-	adc #$10
-	sta ppu_data
-	adc #$10
-	sta ppu_data
-	adc #$10
-	sta ppu_data
-	iny
-	dex
-	bne .pal_loop
-	
 	; clear 700
 	lda #0	
 	tax		

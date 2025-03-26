@@ -58,5 +58,5 @@ controls_d    eqm $7f9
 song_id       eqm $7ff
 
 
-nsf_init_addr eqm $fd50
-titlet_table  eqm $fe00
+nsf_init_addr eqm $fd60
+titlet_table  eqm $fe20

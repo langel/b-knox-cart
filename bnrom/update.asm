@@ -3,8 +3,6 @@
 
 update: subroutine
 
-	jsr update_bank
-
 	lda #$00
 	sta ppu_scroll
 	sta ppu_scroll
@@ -36,14 +34,63 @@ update: subroutine
 	sta controls_d
 	jsr init_track
 .not_controlled_next
+	
+	; timer
+	inc frames_ones
+	lda frames_ones
+	cmp #$0a
+	bne .timer_done
+	lda #$00
+	sta frames_ones
+	inc frames_tens
+	lda frames_tens
+	cmp #$06
+	bne .timer_done
+	lda #$00
+	sta frames_tens
+	inc seconds_ones
+	lda seconds_ones
+	cmp #$0a
+	bne .timer_done
+	lda #$00
+	sta seconds_ones
+	inc seconds_tens
+	lda seconds_tens
+	cmp #$06
+	bne .timer_done
+	lda #$00
+	sta seconds_tens
+	inc minutes_ones
+	lda minutes_ones
+	cmp #$0a
+	bne .timer_done
+	lda #$00
+	sta minutes_ones
+	inc minutes_tens
+.timer_done
 
 	jsr controller_read
+
+	jsr update_bank
+	
+	lda #%00011001
+	sta ppu_mask
+
+	jsr update_track
+
+	lda #%00011000
+	sta ppu_mask
+
 
 	rti
 
 
 update_bank: subroutine
 	jmp (play_bank_lo)
+
+update_track: subroutine
+	jmp (play_nsf_lo)
+
 
 
 
