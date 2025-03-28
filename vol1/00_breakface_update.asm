@@ -16,21 +16,25 @@ bank_update: subroutine
 	lda wtf
 	sta ppu_data 
 
+	ldx $700
 	jsr rand0
 	lsr
 	lsr
 	and #$03
 	clc
 	adc #$20
-	;lda #$21
+	lda #$21
 	sta ppu_addr
 	jsr rand0
+	sta $300,x
 	sta ppu_addr
 	jsr rand0
+	sta $400,x
 	sta ppu_data
-	sta ppu_data
-	sta ppu_data
-	sta ppu_data
+	jsr rand0
+	sta $500,x
+	jsr rand0
+	inc $700
 
 	lda #$22
 	sta ppu_addr
@@ -57,17 +61,6 @@ bank_update: subroutine
 	sta ppu_ctrl
 	lda #%00011110
 	sta ppu_mask
-
-	jsr rand0
-	lsr
-	and #$03
-	clc
-	adc #$24
-	sta temp02
-	jsr rand0
-	sta temp03
-	jsr rand0
-	sta temp04
 
 	rts
 	

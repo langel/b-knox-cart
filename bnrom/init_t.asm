@@ -10,6 +10,7 @@ init_track: subroutine
 
 	; disable rendering
 	lda #$00
+	sta ppu_ctrl
 	sta ppu_mask
 	
 	; clear ram
