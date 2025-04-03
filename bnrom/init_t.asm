@@ -2,12 +2,6 @@
 
 init_track: subroutine
 
-	sei
-	; wait for vblank
-.vsync_wait
-	bit ppu_status
-	bpl .vsync_wait
-
 	; disable rendering
 	lda #$00
 	sta ppu_ctrl
@@ -87,8 +81,6 @@ init_track: subroutine
 
 	sta ppu_scroll
 	sta ppu_scroll
-
-	cli
 
 	jsr nsf_init
 
